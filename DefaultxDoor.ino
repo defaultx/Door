@@ -10,6 +10,7 @@ int port = 8088;
 
 String message = "";
 boolean alreadyConnected = false; // whether or not the client was connected previously
+String key = "";
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -59,6 +60,14 @@ void loop() {
 
 
 void checkMessage() {
+  
+  if (getValue(message, ':', 0) == "key") {
+    Serial.print("Split: ");
+    Serial.println(getValue(message, ':', 0));
+    key = getValue(message, ':', 1);
+    Serial.print("Key from server: ");
+    Serial.println(key);
+  }
 
   if (message == "on") {
     for (x = 0; x < 10; x++)
@@ -98,4 +107,19 @@ void sendMessage(String toSend) {
   else {
     Serial.println("Could not send message; Not connected.");
   }
+}
+
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1  };
+  int maxIndex = data.length()-1;
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+      found++;
+      strIndex[0] = strIndex[1]+1;
+      strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+   }
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
