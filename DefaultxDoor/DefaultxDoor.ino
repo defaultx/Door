@@ -62,7 +62,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
 
-  system("date 042512592016"); //sets the date & time mmddhhmmYY
+  system("date 042613382016"); //sets the date & time mmddhhmmYY
 
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
